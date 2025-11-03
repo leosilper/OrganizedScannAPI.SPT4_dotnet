@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{56AFE8AB-C3EE-4B66-9A95-BB99931D4B3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrganizedScannAPI.Domain", "src\OrganizedScannAPI.Domain\OrganizedScannAPI.Domain.csproj", "{B244CA04-F5DA-4605-892A-9CA0DC9E4222}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrganizedScannAPI.Application", "src\OrganizedScannAPI.Application\OrganizedScannAPI.Application.csproj", "{B67FA998-4D18-46DF-912D-E3570ED17D13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrganizedScannAPI.Infrastructure", "src\OrganizedScannAPI.Infrastructure\OrganizedScannAPI.Infrastructure.csproj", "{19BACDF3-8945-4C74-8D2A-77A7F30180EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrganizedScannAPI.Api", "src\OrganizedScannAPI.Api\OrganizedScannAPI.Api.csproj", "{17687490-3F21-44F6-BB66-ED71C2321EA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B244CA04-F5DA-4605-892A-9CA0DC9E4222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B244CA04-F5DA-4605-892A-9CA0DC9E4222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B244CA04-F5DA-4605-892A-9CA0DC9E4222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B244CA04-F5DA-4605-892A-9CA0DC9E4222}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B67FA998-4D18-46DF-912D-E3570ED17D13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B67FA998-4D18-46DF-912D-E3570ED17D13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B67FA998-4D18-46DF-912D-E3570ED17D13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B67FA998-4D18-46DF-912D-E3570ED17D13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19BACDF3-8945-4C74-8D2A-77A7F30180EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19BACDF3-8945-4C74-8D2A-77A7F30180EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19BACDF3-8945-4C74-8D2A-77A7F30180EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19BACDF3-8945-4C74-8D2A-77A7F30180EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17687490-3F21-44F6-BB66-ED71C2321EA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17687490-3F21-44F6-BB66-ED71C2321EA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17687490-3F21-44F6-BB66-ED71C2321EA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17687490-3F21-44F6-BB66-ED71C2321EA5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B244CA04-F5DA-4605-892A-9CA0DC9E4222} = {56AFE8AB-C3EE-4B66-9A95-BB99931D4B3B}
+		{B67FA998-4D18-46DF-912D-E3570ED17D13} = {56AFE8AB-C3EE-4B66-9A95-BB99931D4B3B}
+		{19BACDF3-8945-4C74-8D2A-77A7F30180EE} = {56AFE8AB-C3EE-4B66-9A95-BB99931D4B3B}
+		{17687490-3F21-44F6-BB66-ED71C2321EA5} = {56AFE8AB-C3EE-4B66-9A95-BB99931D4B3B}
+	EndGlobalSection
+EndGlobal
