@@ -28,17 +28,46 @@ API RESTful (.NET) com 3 entidades principais (**Motorcycles**, **Portals**, **U
 dotnet test
 ```
 
-### Executar Testes Específicos
+### Executar por Classe
 ```bash
-dotnet test --filter "FullyQualifiedName~MotorcycleServiceTests"
-dotnet test --filter "FullyQualifiedName~AuthTests"
+# AuthTests (4 testes)
+dotnet test --filter "FullyQualifiedName~OrganizedScannAPI.Tests.AuthTests"
+
+# MotorcycleServiceTests (1 teste)
+dotnet test --filter "FullyQualifiedName~OrganizedScannAPI.Tests.MotorcycleServiceTests"
 ```
 
-### Testes Disponíveis
-- **MotorcycleServiceTests**: Testes unitários do serviço de motocicletas
-- **AuthTests**: Testes unitários de autenticação e registro
+### Executar por Método Específico (nomes exatos descobertos)
+```bash
+# AuthTests
+dotnet test --filter "FullyQualifiedName~OrganizedScannAPI.Tests.AuthTests.Register_ValidUser_Should_Return_Created"
+dotnet test --filter "FullyQualifiedName~OrganizedScannAPI.Tests.AuthTests.Register_DuplicateEmail_Should_Return_BadRequest"
+dotnet test --filter "FullyQualifiedName~OrganizedScannAPI.Tests.AuthTests.Login_ValidCredentials_Should_Return_Token"
+dotnet test --filter "FullyQualifiedName~OrganizedScannAPI.Tests.AuthTests.Login_InvalidCredentials_Should_Return_Unauthorized"
 
----
+# MotorcycleServiceTests
+dotnet test --filter "FullyQualifiedName~OrganizedScannAPI.Tests.MotorcycleServiceTests.GetPagedAsync_Should_Return_Paginated_List"
+```
+
+### Descobrir Nomes Exatos dos Testes
+```bash
+dotnet test --list-tests -v n
+```
+
+### Rodar em modo watch (dev rápido)
+```bash
+dotnet watch test --project tests/OrganizedScannAPI.Tests
+```
+
+### Cobertura (opcional)
+> Requer `coverlet.collector` como PackageReference no projeto de testes.
+```bash
+dotnet test tests/OrganizedScannAPI.Tests \
+  /p:CollectCoverage=true \
+  /p:CoverletOutputFormat=lcov \
+  /p:CoverletOutput=./TestResults/coverage
+```
+
 
 ## 🔐 Autenticação JWT
 
