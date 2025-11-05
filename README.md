@@ -77,9 +77,10 @@ POST /api/v1/auth/register
 Content-Type: application/json
 
 {
-  "email": "usuario@example.com",
-  "password": "SenhaSegura123",
-  "role": 0
+  "name": "Leonardo Silva",           // ✅ OBRIGATÓRIO (1-150 caracteres)
+  "email": "leonardo@example.com",    // ✅ OBRIGATÓRIO
+  "password": "SilvaSegura123",       // ✅ OBRIGATÓRIO (mínimo 6 caracteres)
+  "role": 0                            // ✅ OBRIGATÓRIO (0-3)
 }
 ```
 
