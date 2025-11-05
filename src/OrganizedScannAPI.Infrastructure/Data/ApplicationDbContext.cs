@@ -24,9 +24,30 @@ namespace OrganizedScannApi.Infrastructure.Data
                 e.HasKey(x => x.Id);
 
                 e.Property(x => x.Id).HasColumnName("ID");
-                e.Property(x => x.Email).HasColumnName("EMAIL");
-                e.Property(x => x.Password).HasColumnName("PASSWORD");
-                e.Property(x => x.Role).HasColumnName("ROLE");
+                
+                e.Property(x => x.Name)
+                    .HasColumnName("NAME")
+                    .HasMaxLength(150)
+                    .IsRequired(); // NOT NULL no banco
+                
+                e.Property(x => x.Email)
+                    .HasColumnName("EMAIL")
+                    .HasMaxLength(254)
+                    .IsRequired(); // NOT NULL no banco
+                
+                // PASSWORD não existe na tabela real do banco, então ignoramos essa propriedade
+                // Se você precisar de senha, será necessário adicionar a coluna PASSWORD na tabela
+                e.Ignore(x => x.Password);
+                
+                e.Property(x => x.Role)
+                    .HasColumnName("ROLE")
+                    .HasColumnType("NUMBER(3,0)")
+                    .IsRequired(); // NOT NULL no banco
+                
+                e.Property(x => x.CreatedAt)
+                    .HasColumnName("CREATED_AT")
+                    .HasColumnType("TIMESTAMP(6)")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP"); // Valor padrão no banco
 
                 // opcional: índice/unique de Email
                 e.HasIndex(x => x.Email).IsUnique();

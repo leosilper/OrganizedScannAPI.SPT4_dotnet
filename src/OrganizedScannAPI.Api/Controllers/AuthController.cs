@@ -39,21 +39,36 @@ namespace OrganizedScannApi.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<AuthResponse>> Register([FromBody] RegisterRequest request)
         {
-            if (_context.Users.Any(u => u.Email == request.Email))
+            // Verificação de email usando CountAsync para evitar problemas com Oracle e booleanos
+            var emailCount = await _context.Users
+                .Where(u => u.Email == request.Email)
+                .CountAsync();
+            
+            if (emailCount > 0)
             {
                 return BadRequest(new { message = "Email já está em uso" });
             }
 
-            // Hash da senha (em produção, usar BCrypt ou Identity)
+            // Nota: A tabela USERS não possui coluna PASSWORD no banco de dados
+            // Se você precisar de autenticação por senha, adicione a coluna PASSWORD na tabela
             var user = new User
             {
+                Name = request.Name, // NAME é obrigatório (NOT NULL) na tabela
                 Email = request.Email,
-                Password = request.Password, // Em produção, deve ser hasheada
-                Role = (Domain.Enums.UserRole)request.Role
+                Role = (Domain.Enums.UserRole)request.Role,
+                CreatedAt = DateTime.UtcNow // Se o default não funcionar, definimos manualmente
             };
 
             _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex) when (ex.InnerException?.Message?.Contains("ORA-00001") == true || 
+                                                ex.InnerException?.Message?.Contains("unique constraint") == true)
+            {
+                return BadRequest(new { message = "Email já está em uso" });
+            }
 
             var token = GenerateJwtToken(user);
             return CreatedAtAction(nameof(Register), new AuthResponse
@@ -74,10 +89,12 @@ namespace OrganizedScannApi.Api.Controllers
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
             
-            // Em produção, verificar hash da senha
-            if (user == null || user.Password != request.Password)
+            // Nota: A tabela USERS não possui coluna PASSWORD no banco de dados
+            // Por enquanto, o login é feito apenas por email (sem validação de senha)
+            // Se você precisar de autenticação por senha, adicione a coluna PASSWORD na tabela
+            if (user == null)
             {
-                return Unauthorized(new { message = "Email ou senha inválidos" });
+                return Unauthorized(new { message = "Email não encontrado" });
             }
 
             var token = GenerateJwtToken(user);
@@ -125,6 +142,10 @@ namespace OrganizedScannApi.Api.Controllers
 
     public class RegisterRequest
     {
+        [Required]
+        [StringLength(150, MinimumLength = 1)]
+        public string Name { get; set; } = string.Empty;
+
         [Required]
         [EmailAddress]
         public string Email { get; set; } = string.Empty;

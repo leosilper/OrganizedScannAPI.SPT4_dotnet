@@ -36,9 +36,11 @@ namespace OrganizedScannApi.Api.Swagger
         public User GetExamples() => new User
         {
             Id = 1,
+            Name = "Administrador",
             Email = "admin@example.com",
             Password = "Secret@123",
-            Role = UserRole.ADMIN
+            Role = UserRole.ADMIN,
+            CreatedAt = DateTime.UtcNow
         };
     }
 }

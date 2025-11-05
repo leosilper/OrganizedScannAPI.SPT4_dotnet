@@ -5,6 +5,7 @@ using OrganizedScannApi.Infrastructure.Data;
 using OrganizedScannApi.Domain.Entities;
 using OrganizedScannAPI.Application.Pagination; // I maiúsculo
 using OrganizedScannAPI.Application.Hateoas;    // I maiúsculo
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -74,6 +75,12 @@ namespace OrganizedScannApi.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<User>> Create([FromBody] User user)
         {
+            // Garantir que CreatedAt seja preenchido se não foi fornecido
+            if (user.CreatedAt == default)
+            {
+                user.CreatedAt = DateTime.UtcNow;
+            }
+            
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
