@@ -285,15 +285,16 @@ Sem parâmetros. **Esperado:** `200 OK`.
 ### POST /api/v1/motorcycles (exemplo feliz)
 ```json
 {
-  "licensePlate": "ABC1D23",
-  "rfid": "RFID-0001",
+  "licensePlate": "RTA7D91",
+  "rfid": "RFID-0029",
   "problemDescription": "Troca de óleo e revisão de freios",
-  "portalId": 2,
-  "entryDate": "2025-09-30T12:00:00Z",
-  "availabilityForecast": "2025-10-02T12:00:00Z",
+  "portalId": 1,
+  "entryDate": "2025-09-30T12:00:00",
+  "availabilityForecast": "2025-10-02T12:00:00",
   "brand": "Honda",
   "year": 2022
 }
+
 ```
 **Esperado:** `201 Created` + `Location` do recurso.
 
