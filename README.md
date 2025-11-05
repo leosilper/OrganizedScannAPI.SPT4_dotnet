@@ -28,17 +28,46 @@ API RESTful (.NET) com 3 entidades principais (**Motorcycles**, **Portals**, **U
 dotnet test
 ```
 
-### Executar Testes Específicos
+### Executar por Classe
 ```bash
-dotnet test --filter "FullyQualifiedName~MotorcycleServiceTests"
-dotnet test --filter "FullyQualifiedName~AuthTests"
+# AuthTests (4 testes)
+dotnet test --filter "FullyQualifiedName~OrganizedScannAPI.Tests.AuthTests"
+
+# MotorcycleServiceTests (1 teste)
+dotnet test --filter "FullyQualifiedName~OrganizedScannAPI.Tests.MotorcycleServiceTests"
 ```
 
-### Testes Disponíveis
-- **MotorcycleServiceTests**: Testes unitários do serviço de motocicletas
-- **AuthTests**: Testes unitários de autenticação e registro
+### Executar por Método Específico (nomes exatos descobertos)
+```bash
+# AuthTests
+dotnet test --filter "FullyQualifiedName~OrganizedScannAPI.Tests.AuthTests.Register_ValidUser_Should_Return_Created"
+dotnet test --filter "FullyQualifiedName~OrganizedScannAPI.Tests.AuthTests.Register_DuplicateEmail_Should_Return_BadRequest"
+dotnet test --filter "FullyQualifiedName~OrganizedScannAPI.Tests.AuthTests.Login_ValidCredentials_Should_Return_Token"
+dotnet test --filter "FullyQualifiedName~OrganizedScannAPI.Tests.AuthTests.Login_InvalidCredentials_Should_Return_Unauthorized"
 
----
+# MotorcycleServiceTests
+dotnet test --filter "FullyQualifiedName~OrganizedScannAPI.Tests.MotorcycleServiceTests.GetPagedAsync_Should_Return_Paginated_List"
+```
+
+### Descobrir Nomes Exatos dos Testes
+```bash
+dotnet test --list-tests -v n
+```
+
+### Rodar em modo watch (dev rápido)
+```bash
+dotnet watch test --project tests/OrganizedScannAPI.Tests
+```
+
+### Cobertura (opcional)
+> Requer `coverlet.collector` como PackageReference no projeto de testes.
+```bash
+dotnet test tests/OrganizedScannAPI.Tests \
+  /p:CollectCoverage=true \
+  /p:CoverletOutputFormat=lcov \
+  /p:CoverletOutput=./TestResults/coverage
+```
+
 
 ## 🔐 Autenticação JWT
 
@@ -48,9 +77,10 @@ POST /api/v1/auth/register
 Content-Type: application/json
 
 {
-  "email": "usuario@example.com",
-  "password": "SenhaSegura123",
-  "role": 0
+  "name": "Leonardo Silva",           // ✅ OBRIGATÓRIO (1-150 caracteres)
+  "email": "leonardo@example.com",    // ✅ OBRIGATÓRIO
+  "password": "SilvaSegura123",       // ✅ OBRIGATÓRIO (mínimo 6 caracteres)
+  "role": 0                            // ✅ OBRIGATÓRIO (0-3)
 }
 ```
 
@@ -255,15 +285,16 @@ Sem parâmetros. **Esperado:** `200 OK`.
 ### POST /api/v1/motorcycles (exemplo feliz)
 ```json
 {
-  "licensePlate": "ABC1D23",
-  "rfid": "RFID-0001",
+  "licensePlate": "RTA7D91",
+  "rfid": "RFID-0029",
   "problemDescription": "Troca de óleo e revisão de freios",
-  "portalId": 2,
-  "entryDate": "2025-09-30T12:00:00Z",
-  "availabilityForecast": "2025-10-02T12:00:00Z",
+  "portalId": 1,
+  "entryDate": "2025-09-30T12:00:00",
+  "availabilityForecast": "2025-10-02T12:00:00",
   "brand": "Honda",
   "year": 2022
 }
+
 ```
 **Esperado:** `201 Created` + `Location` do recurso.
 
